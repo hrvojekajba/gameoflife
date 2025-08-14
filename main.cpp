@@ -6,22 +6,26 @@
 
 #include "sim.hpp"
 #include <raylib.h>
+#include <iostream>
 
 int main() {
-    Color color_grey = {29, 29, 29, 255};
-    const int window_height = 750;
-    const int window_width = 750;
-    const int cell_size = 25;
-    const int target_fps = 15;
+    Color colorGrey = {29, 29, 29, 255};
+    const int windowHeight = 750;
+    const int windowWidth = 750;
+    const int cellSize = 25;
+    const int targetFPS = 15;
 
-    InitWindow(window_width, window_height, "Game of Life"); // initialize window
-    SetTargetFPS(target_fps); // set target fps for window
-    Simulation sim{window_width, window_height, cell_size};
+    InitWindow(windowWidth, windowHeight, "Game of Life"); // initialize window
+    SetTargetFPS(targetFPS); // set target fps for window
+    Simulation sim{windowWidth, windowHeight, cellSize};
+    sim.setCellValue(3, 4, 1);
+    sim.setCellValue(3, 5, 1);
+    sim.setCellValue(2, 4, 1);
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
-        ClearBackground(color_grey);
-        sim.draw();
+        ClearBackground(colorGrey);
+        sim.Draw();
         EndDrawing();
     }
 
