@@ -4,13 +4,8 @@
 
 class Grid {
     public:
-        // define class constructor -- we use an initializer list to intialize the
-        // private variables
         Grid(int width, int height, int cellSize) : rows(height / cellSize), columns(width / cellSize),
             cellSize(cellSize), cells(rows, std::vector<int>(columns, 0)) {};
-            // initialize cells -- which is a vector of vectors of integers,
-            // number of vectors is rows, and each row is a vector that contains
-            // a columns number of elements
 
         void Draw() {
             for (int row = 0; row < rows; row++) {
@@ -22,7 +17,7 @@ class Grid {
                 }
             }
         }
-
+        // check if given cell is within board bounds
         bool isWithinBounds(int row, int column) {
             if (row >= 0 && row < rows && column >= 0 && column < columns) {
                 return true;
@@ -43,6 +38,38 @@ class Grid {
             }
             return 0;
         }
+
+        int getRows() {
+            return rows;
+        }
+
+        int getColumns() {
+            return columns;
+        }
+
+        void fillRandom() {
+            for (int row = 0; row < rows; row++) {
+                for (int column = 0; column < columns; column++) {
+                    int randomValue = GetRandomValue(0, 5);
+                    cells[row][column] = (randomValue == 5) ? 1 : 0;
+                }
+            }
+        }
+
+        void clearGrid() {
+            for (int row = 0; row < rows; row++) {
+                for (int column = 0; column < columns; column++) {
+                    cells[row][column] = 0;
+                }
+            }
+        }
+
+        void toggleCell(int row, int column) {
+            if (isWithinBounds(row, column)) {
+                cells[row][column] = !cells[row][column];
+            }
+        }
+
     private:
         int rows;
         int columns;

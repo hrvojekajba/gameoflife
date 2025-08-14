@@ -6,23 +6,47 @@
 
 #include "sim.hpp"
 #include <raylib.h>
-#include <iostream>
 
 int main() {
     Color colorGrey = {29, 29, 29, 255};
-    const int windowHeight = 750;
-    const int windowWidth = 750;
+    const int windowHeight = 1000;
+    const int windowWidth = 1500;
     const int cellSize = 25;
-    const int targetFPS = 15;
+    int targetFPS = 10;
 
     InitWindow(windowWidth, windowHeight, "Game of Life"); // initialize window
     SetTargetFPS(targetFPS); // set target fps for window
     Simulation sim{windowWidth, windowHeight, cellSize};
-    sim.setCellValue(3, 4, 1);
-    sim.setCellValue(3, 5, 1);
-    sim.setCellValue(2, 4, 1);
 
     while (WindowShouldClose() == false) {
+        if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            Vector2 mousePosition = GetMousePosition();
+            int row = mousePosition.y / cellSize;
+            int column = mousePosition.x / cellSize;
+            sim.toggleCell(row, column);
+        }
+        if (IsKeyPressed(KEY_ENTER)) {
+            sim.startSimulation();
+            SetWindowTitle("Game of Life is running");
+        } else if (IsKeyPressed(KEY_SPACE)) {
+            sim.stopSimulation();
+            SetWindowTitle("Game of Life has stopped");
+        } else if (IsKeyPressed(KEY_F)) {
+            targetFPS += 1;
+            SetTargetFPS(targetFPS);
+        } else if (IsKeyPressed(KEY_S)) {
+            if (targetFPS > 5) {
+                targetFPS -= 1;
+                SetTargetFPS(targetFPS);
+            }
+        } else if (IsKeyPressed(KEY_R)) {
+            sim.createRandomState();
+        } else if (IsKeyPressed(KEY_C)) {
+            sim.clearGrid();
+        }
+
+        sim.updateState();
+
         BeginDrawing();
         ClearBackground(colorGrey);
         sim.Draw();
