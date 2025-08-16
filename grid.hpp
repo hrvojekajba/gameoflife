@@ -11,7 +11,7 @@ class Grid {
             for (int row = 0; row < rows; row++) {
                 for (int column = 0; column < columns; column++) {
                     // assigns green to cell that holds a non zero value
-                    Color color = cells[row][column] ? Color{0, 255, 0, 255} : Color{55, 55, 55, 255};
+                    Color color = cells[row][column] ? Color{135, 206, 235, 255} : Color{55, 55, 55, 255};
                     // draw rectangle for each cell
                     DrawRectangle(column * cellSize, row * cellSize, cellSize - 1, cellSize - 1, color);
                 }
